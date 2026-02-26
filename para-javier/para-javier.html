@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Javier Rivera ❤️</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: radial-gradient(circle at top, #1a001a, #000);
+    overflow:hidden;
+    font-family: 'Segoe UI', sans-serif;
+    color:white;
+}
+
+/* Lluvia de corazones */
+.rain-heart{
+    position:absolute;
+    top:-10vh;
+    pointer-events:none;
+    animation: fall linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform: translateY(110vh);
+        opacity:0;
+    }
+}
+
+/* Estrellas */
+.star{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:white;
+    animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+    from{opacity:0.3;}
+    to{opacity:1;}
+}
+
+/* Contenedor */
+.container{
+    position:relative;
+    text-align:center;
+}
+
+/* Corazón gigante */
+.heart{
+    position:relative;
+    width:300px;
+    height:300px;
+    background:linear-gradient(45deg,#ff0066,#ff4da6);
+    transform:rotate(-45deg);
+    animation:beat 1.2s infinite;
+    box-shadow:0 0 40px #ff0066;
+    cursor:pointer;
+    margin:auto;
+}
+
+.heart:before,
+.heart:after{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    background:inherit;
+    border-radius:50%;
+}
+
+.heart:before{ top:-150px; left:0; }
+.heart:after{ left:150px; top:0; }
+
+@keyframes beat{
+    0%{transform:rotate(-45deg) scale(1);}
+    50%{transform:rotate(-45deg) scale(1.1);}
+    100%{transform:rotate(-45deg) scale(1);}
+}
+
+/* Texto */
+.text{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:250px;
+    text-align:center;
+    opacity:0;
+    transition:opacity 1s ease;
+}
+
+.show{
+    opacity:1;
+}
+
+.name{
+    font-size:26px;
+    font-weight:bold;
+    margin-bottom:10px;
+    text-shadow:0 0 10px #ff66b2;
+}
+
+.message{
+    font-size:16px;
+    line-height:1.5;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="heart" onclick="openLove()"></div>
+
+    <div class="text" id="text">
+        <div class="name">Javier Rivera ❤️</div>
+        <div class="message">
+            Mi amor eterno 💕<br><br>
+            Gracias por cada abrazo,<br>
+            por cada sonrisa,<br>
+            por cada momento juntos.<br><br>
+            Eres mi hogar,<br>
+            mi paz y mi felicidad.<br><br>
+            Te amo infinito ✨
+        </div>
+    </div>
+</div>
+
+<script>
+
+let rainStarted = false;
+
+/* Estrellas */
+for(let i=0;i<80;i++){
+    let star=document.createElement("div");
+    star.classList.add("star");
+    star.style.left=Math.random()*100+"vw";
+    star.style.top=Math.random()*100+"vh";
+    star.style.animationDuration=(Math.random()*2+1)+"s";
+    document.body.appendChild(star);
+}
+
+function openLove(){
+
+    // Mostrar mensaje
+    document.getElementById("text").classList.add("show");
+
+    // Explosión inicial
+    for(let i=0;i<25;i++){
+        let heart=document.createElement("div");
+        heart.innerHTML="❤️";
+        heart.style.position="absolute";
+        heart.style.left="50%";
+        heart.style.top="50%";
+        heart.style.fontSize="22px";
+        heart.style.transform="translate(-50%, -50%)";
+        heart.style.transition="all 0.8s ease-out";
+        heart.style.pointerEvents="none";
+
+        document.body.appendChild(heart);
+
+        let x=(Math.random()*600-300);
+        let y=(Math.random()*600-300);
+
+        setTimeout(()=>{
+            heart.style.transform=`translate(${x}px, ${y}px) scale(1.5)`;
+            heart.style.opacity="0";
+        },10);
+
+        setTimeout(()=>{
+            heart.remove();
+        },800);
+    }
+
+    // Iniciar lluvia solo una vez
+    if(!rainStarted){
+        rainStarted = true;
+        startHeartRain();
+    }
+}
+
+function startHeartRain(){
+    setInterval(()=>{
+        let heart=document.createElement("div");
+        heart.classList.add("rain-heart");
+        heart.innerHTML="❤️";
+
+        heart.style.left=Math.random()*100+"vw";
+        heart.style.fontSize=(Math.random()*25+15)+"px";
+        heart.style.animationDuration=(Math.random()*2+3)+"s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(()=>{
+            heart.remove();
+        },5000);
+
+    },150); // velocidad lluvia
+}
+
+</script>
+
+</body>
+</html>
